@@ -10,7 +10,9 @@ all:
 	$(CPP) $(CPPFLAGS) -c ifaddr.cpp 
 	$(CPP) $(CPPFLAGS) $(LDFLAGS) -o ip ifaddr.o
 	$(CPP) $(CPPFLAGS) $(LDFLAGS_STATIC) -o ip_s ifaddr.o /usr/local/lib/libboost_program_options.a
-	strip ip ip_s
+
+install:
+	install -s ip_s /usr/local/bin/ip
 
 clean:
 	rm ip ip_s *.o

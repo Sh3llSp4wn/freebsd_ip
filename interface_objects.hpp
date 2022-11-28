@@ -120,7 +120,7 @@ namespace interface_addrs {
                 break;
               case AF_INET6:
                 std::cout << rang::fg::magenta;
-		break;
+                break;
               default:
                 printed = false;
                 break;
@@ -164,14 +164,18 @@ namespace interface_addrs {
         mib[4] = NET_RT_DUMP;
         mib[5] = 0;
         mib[6] = -1;
+        
+        std::cout << "Printing " << (af == AF_INET ? "IPv4" : "IPv6") << " Routes" << std::endl;
 
-        if(sysctl(mib, nitems(mib), NULL, &needed, NULL, 0) < 0) return;
+        if(sysctl(mib, nitems(mib), NULL, &needed, NULL, 0) < 0){
+          throw std::runtime_error("data size sysctl failed");
+        }
         if((buf = (char *)malloc(needed)) == NULL){
           throw std::runtime_error("No Mem");
         }
         if(sysctl(mib, nitems(mib), buf, &needed, NULL, 0) < 0){
           free(buf);
-          return;
+          throw std::runtime_error("data collection sysctl failed");
         }
 
         lim = buf + needed;
@@ -186,11 +190,11 @@ namespace interface_addrs {
           for(int i = 0; i < num_sockaddrs; i++){
             auto sa_n = &sa[i];
             auto ip_n_fam = sockaddr_to_ip(sa_n);
-	    if(ip_n_fam.second == 0) continue;
+            if(ip_n_fam.second == 0) continue;
             std::cout << (int)ip_n_fam.second << ": " << ip_n_fam.first << std::endl;
           }
-	  std::cout << "===" << std::endl;
-	  std::cout << std::endl;
+          std::cout << "===" << std::endl;
+          std::cout << std::endl;
         }
       }
   };
