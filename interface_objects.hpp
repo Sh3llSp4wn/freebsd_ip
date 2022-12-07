@@ -105,7 +105,7 @@ namespace interface_addrs {
       void print_addrs(){
         for(auto& iface : interfaces){
           // print the interface name as green
-          std::cout << rang::fg::green << iface.first << rang::style::reset << ":\t";
+          std::cout << rang::fg::blue << iface.first << rang::style::reset << ":\t";
           // this delimiter algorithm is "add first" with the delim starting as
           // the empty string. The delim is then changed to ", " for insertion of
           // commas

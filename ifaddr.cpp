@@ -70,6 +70,9 @@ int main(int ac, char* av[]){
         std::cerr << "invalid object selection" << std::endl;
         return 1;
       }
+    } else {
+      std::cerr << "no object selection" << std::endl;
+      return 1;
     }
 
     // determine which function to call
@@ -87,6 +90,9 @@ int main(int ac, char* av[]){
         std::cerr << "invalid action selection" << std::endl;
         return 1;
       }
+    }
+    else{
+      obj->list(vm);
     }
   } catch (std::runtime_error& ex){
     std::cerr << "ERROR: " << ex.what() << std::endl;
